@@ -5,7 +5,7 @@ async function go () {
 
   // go and setup the client connection
   const { usbDevice } = await new QuickgRPC({
-    host: '0.0.0.0:9109',
+    host: '0.0.0.0:9000',
     basePath: join(__dirname, 'src')
   })
 
@@ -31,17 +31,20 @@ async function go () {
     let data = payload.toString()
     // write some data once we have the connection open
     if (data === 'device.open') {
-      client.write(
-        {
-          // we need to make sure to encode our payload, the server expects a `bytes` type
-          payload: Buffer.from('status1\r')
-        },
-        function (err) {
-          if (err) console.log('ERROR:', err.message)
-        }
-      )
+      doWrite('close1\r')
     }
   })
+  function doWrite (data) {
+    client.write(
+      {
+        // we need to make sure to encode our payload, the server expects a `bytes` type
+        payload: Buffer.from(data)
+      },
+      function (err) {
+        if (err) console.log('ERROR:', err.message)
+      }
+    )
+  }
 }
 
 go()

@@ -7,8 +7,7 @@ const { join } = require('path')
 
 const packageDefinition = protoLoader.loadSync(join(__dirname, 'usb-device.proto'))
 
-const usbproto = grpc.loadPackageDefinition(packageDefinition).oak.application
-
+const usbproto = grpc.loadPackageDefinition(packageDefinition).usbdevice
 const Device = require(join(__dirname, 'device'))
 
 let deviceRef = false
@@ -39,14 +38,15 @@ async function Open (call) {
   deviceRef = device
   device.on('data', payload => call.write({ payload }) )
     .on('error', err => {
+      device = false
+      deviceRef = false
+      call.end()
+    })
+    .on('close', async err => {
       call.end()
       device = false
       deviceRef = false
-    })
-    .on('close', async err => {
-      await device.destroy()
-      device = false
-      deviceRef = false
+      device.destroy()
     })
   try {
     await device.open(devicePath, deviceOpts)
