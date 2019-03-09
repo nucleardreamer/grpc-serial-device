@@ -1,0 +1,14 @@
+---
+version: '3'
+
+services:
+  server:
+    build: .
+    image: index.docker.io/nucleardreamer/grpc-serial-device-server:${VERSION-latest}
+    network_mode: host
+    environment:
+      - PORT=9109
+    volumes:
+      - ./src:/src/
+    devices:
+      - /dev/ttyUSB0

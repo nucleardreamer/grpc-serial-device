@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package oak.application;
+
+service UsbDevice {
+  rpc List (Empty) returns (Devices) {}
+  rpc Open (DeviceConfig) returns (stream Payload) {}
+  rpc Write (Payload) returns (Empty) {}
+}
+
+message Empty {}
+
+message DeviceConfig {
+  required string devicePath = 1;
+  optional DeviceOptions deviceOpts = 2;
+}
+
+message DeviceOptions {
+  int32 baudRate = 1;
+  int32 dataBits = 2;
+  int32 stopBits = 3;
+  int32 highWaterMark = 4;
+  string parity = 5;
+  bool rtscts = 6;
+  bool lock = 7;
+  bool xon = 8;
+  bool xoff = 9;
+  bool xany = 10;
+}
+
+message Payload {
+  bytes payload = 1;
+}
+
+message Devices {
+  repeated Device devices = 1;
+}
+
+message Device {
+  string manufacturer = 1;
+  string pnpId = 2;
+  string locationId = 3;
+  string vendorId = 4;
+  string productId = 5;
+  string comName = 6;
+}

@@ -1,0 +1,38 @@
+{
+  "name": "grpc-serial-device-server",
+  "version": "0.1.0",
+  "description": "A gRPC server for communicating with serial devices",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node .",
+    "test": "exit 0"
+  },
+  "engines": {
+    "node": ">=10.15.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nucleardreamer/grpc-serial-device-server.git"
+  },
+  "keywords": [
+    "OakOS",
+    "oak",
+    "southco",
+    "ea-a06"
+  ],
+  "author": "Flynn Joffray <nucleardreamer@gmail.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/nucleardreamer/grpc-serial-device-server/issues"
+  },
+  "homepage": "https://github.com/nucleardreamer/grpc-serial-device-server#readme",
+  "dependencies": {
+    "@grpc/proto-loader": "~0.4.0",
+    "grpc": "~1.19.0",
+    "lodash": "~4.17.11",
+    "serialport": "~7.1.4"
+  },
+  "devDependencies": {
+    "quick-grpc": "~1.0.2"
+  }
+}
